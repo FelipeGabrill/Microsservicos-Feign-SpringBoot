@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erudio.model.Book;
+import com.erudio.repository.BookRepository;
 
 @RestController
 @RequestMapping("book-service")
@@ -18,6 +19,8 @@ public class BookController {
 	@Autowired
 	private Environment environment;
 	
+	@Autowired
+	private BookRepository repository;
 
 	//http://localhost:8000/book-service/1/BRL
 	@GetMapping(value = "/{id}/{currency}")
@@ -25,8 +28,10 @@ public class BookController {
 			@PathVariable("id") Long id,
 			@PathVariable("currency") String currency
 			) {
+		var book = repository.findById(id).orElseThrow(() -> new RuntimeException("Book not Found"));
+		
 		var port = environment.getProperty("local.server.port");
-
-		return new Book(1L, "Nigel", "Docker Deep Dive", new Date(), Double.valueOf(13.7), currency, port);
+		book.setEnviroment(port);
+		return book;
 	}
 }
