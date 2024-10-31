@@ -44,3 +44,8 @@ spring:
     schemas: book_service
     user: root
     password: 12345678
+springdoc:
+  show-actuator: true
+  api-docs:
+    path: book-service/v3/api-docs
+    
