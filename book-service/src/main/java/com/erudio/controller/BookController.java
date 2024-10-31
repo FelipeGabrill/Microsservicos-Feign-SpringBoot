@@ -11,6 +11,10 @@ import com.erudio.model.Book;
 import com.erudio.proxy.CambioProxy;
 import com.erudio.repository.BookRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Book endpoint")
 @RestController
 @RequestMapping("book-service")
 public class BookController {
@@ -25,6 +29,7 @@ public class BookController {
 	private CambioProxy proxy;
 
 	//http://localhost:8000/book-service/1/BRL
+	@Operation(summary = "Find a specific book by your ID")
 	@GetMapping(value = "/{id}/{currency}")
 	public Book findBook(
 			@PathVariable("id") Long id,
