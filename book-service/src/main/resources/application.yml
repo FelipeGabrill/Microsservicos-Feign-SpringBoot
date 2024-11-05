@@ -44,6 +44,10 @@ spring:
     schemas: book_service
     user: root
     password: 12345678
+  management:
+    tracing:
+      sampling:
+        probability: 1.0 
 springdoc:
   show-actuator: true
   api-docs:
