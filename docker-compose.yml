@@ -7,6 +7,12 @@ services:
       - 8762:8761
     networks:
       - erudio-network
+  zipkin:
+    image: openzipkin/zipkin:2.23.2
+    ports:
+      - 9412:9411
+    networks:
+      - erudio-network
 networks:
   erudio-network:
     driver: bridge
