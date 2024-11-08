@@ -88,6 +88,30 @@ services:
       - naming-server
       - cambio-db
     networks:
+      - erudio-network 
+  
+  book-service:
+    image: library/book-service
+    restart: always
+    build:
+      context: .
+      dockerfile: book-service/Dockerfile
+    environment:
+      TZ: America/Sao_paulo
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      SPRING.DATASOURCE.URL: jdbc:mysql://book-db:3310/book_service?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+      SPRING.FLYWAY.URL: jdbc:mysql://book-db:3310/book_service?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: admin123
+    ports:
+      - 8108:8108
+    depends_on:
+      - naming-server
+      - cambio-db
+    networks:
       - erudio-network   
 networks:
   erudio-network:
