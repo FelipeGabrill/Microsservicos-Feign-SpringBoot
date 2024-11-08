@@ -4,7 +4,8 @@ services:
   zipkin-server:
     image: openzipkin/zipkin:2.23.2
     ports:
-      - 9412:9411
+      - 9411:9411
+    restart: always
     depends_on: 
       - rabbit-mq
     environment:
@@ -62,14 +63,14 @@ services:
   naming-server:
     image: naming-server:0.0.1-SNAPSHOT
     ports:
-      - 8762:8761
+      - 8761:8761
     networks:
       - erudio-network
       
   api-gateway:
     image: library/api-gateway:0.0.1-SNAPSHOT
     ports:
-      - 8766:8765
+      - 8765:8765
     depends_on:
       - naming-server
       - rabbit-mq
@@ -102,7 +103,7 @@ services:
       SPRING.FLYWAY.USER: root
       SPRING.FLYWAY.PASSWORD: admin123
     ports:
-      - 8008:8008
+      - 8000:8000
     depends_on:
       - naming-server
       - cambio-db
@@ -130,7 +131,7 @@ services:
       SPRING.FLYWAY.USER: root
       SPRING.FLYWAY.PASSWORD: admin123
     ports:
-      - 8108:8108
+      - 8100:8100
     depends_on:
       - naming-server
       - cambio-db
